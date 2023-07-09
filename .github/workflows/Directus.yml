@@ -29,5 +29,11 @@ jobs:
       - name: Tag Docker image
         run: docker tag directus/directus:latest raigorobin/viimanekatse:latest
       
+      - name: Start PostgreSQL database container
+        run: docker run -d --name directus-db -e POSTGRES_PASSWORD=your_password -e POSTGRES_DB=directus postgres:latest
+      
+      - name: Start Directus container
+        run: docker run -d -p 80:80 --name directus --link directus-db:db -e DATABASE_HOST=db -e DATABASE_PORT=5432 -e DATABASE_NAME=directus -e DATABASE_USER=postgres -e DATABASE_PASSWORD=your_password raigorobin/viimanekatse:latest
+      
       - name: Push Docker image
         run: docker push raigorobin/viimanekatse:latest
