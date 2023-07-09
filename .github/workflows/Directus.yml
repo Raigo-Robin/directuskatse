@@ -29,8 +29,12 @@ jobs:
       - name: Tag Docker image
         run: docker tag directus/directus raigorobin/viimanekatse:latest
       
+      - name: Set environment variables
+        run: |
+          echo "KEY=${{ secrets.KEY }}" >> .env
+      
       - name: Expose port 80
-        run: docker run -d -p 80:80 raigorobin/viimanekatse:latest
+        run: docker run -d -p 80:80 --env-file .env raigorobin/viimanekatse:latest
       
       - name: Push Docker image
         run: docker push raigorobin/viimanekatse:latest
