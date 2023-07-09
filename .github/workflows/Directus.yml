@@ -29,5 +29,8 @@ jobs:
       - name: Tag Docker image
         run: docker tag directus/directus raigorobin/viimanekatse:latest
       
+      - name: Expose port 80
+        run: docker run -d -p 80:80 raigorobin/viimanekatse:latest
+      
       - name: Push Docker image
         run: docker push raigorobin/viimanekatse:latest
